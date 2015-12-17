@@ -1,2 +1,2 @@
 # cssLoading.js
-CSS3 Loading withour image file.
+CSS3 Loading without image file.
