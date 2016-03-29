@@ -15,40 +15,61 @@
 (function($){
     var methods = {
         init : function(options){
-            this.css('position', 'relative');
-            
+            if(options && options.$el){
+                var $el = options.$el;
+            }else{
+                var $el = this
+            }
+            $el.css('position', 'relative');
             var d = {};
-            d.$loading = $("<div/>").addClass('loading').appendTo(this);
-            d.$mask = $("<div/>").addClass('mask').appendTo(this);
+            d.$loading = $("<div/>").addClass('loading').appendTo($el);
+            d.$mask = $("<div/>").addClass('mask').appendTo($el);
             d.$maskMsg = $("<p/>").appendTo(d.$mask);
             
-            this.data('cssLoading', d);
+            if(options && options.size){
+                if(options.size === 'small'){
+                    d.$loading.addClass('loading_small')
+                }
+                if(options.size === 'large'){
+                    d.$loading.addClass('loading_large')
+                }
+            }
+            
+            $el.data('cssLoading', d);
+            
+            return $el;
         },
         show : function(){
             var d = this.data('cssLoading');
             if(!d){
-                methods.init();
+                var $el = methods.init({$el: this});
+                d = $el.data('cssLoading');
             }
             d.$loading.show();
             d.$mask.show();
+            
+            return this;
         },
         hide : function(){
             var d = this.data('cssLoading');
             if(!d){
-                methods.init();
+                var $el = methods.init({$el: this});
+                d = $el.data('cssLoading');
             }
             d.$loading.hide();
             d.$mask.hide();
+            
+            return this;
         },
     };
-
+    
     $.fn.cssLoading = function(methodOrOptions) {
         if( methods[methodOrOptions] ) {
             return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         }else if ( typeof methodOrOptions === 'object' || ! methodOrOptions ) {
             return methods.init.apply( this, arguments ); // Default to "init"
         }else {
-            $.error( 'Method ' +  methodOrOptions + ' does not exist on jQuery.tooltip' );
+            $.error( 'Method ' +  methodOrOptions + ' does not exist. ');
         }
     };
 })(jQuery);
