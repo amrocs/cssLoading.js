@@ -4,7 +4,6 @@
  *      forked from http://www.alessioatzeni.com/wp-content/tutorials/html-css/CSS3-loading-animation-loop/index.html
  * 
  *      Usage:
- *          jQueryElement.cssLoading(); //initialize
  *          jQueryElement.cssLoading('show');
  *          jQueryElement.cssLoading('hide');
  * 
