@@ -1,2 +1,4 @@
 # cssLoading.js
-CSS3 Loading without image file.
+CSS3 Loading without any image file.
+
+see [Demo](http://amrocs.github.io/cssloading_demo/index.html "demo")
