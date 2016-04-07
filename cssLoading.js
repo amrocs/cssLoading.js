@@ -1,36 +1,33 @@
 /*
  *  CSS3 Loading indicator.
  *    
- *    forked from http://www.alessioatzeni.com/wp-content/tutorials/html-css/CSS3-loading-animation-loop/index.html
- *    
  *    Usage:
  *      jQueryElement.cssLoading('show');
+ *      jQueryElement.cssLoading('show', 'small');
+ *      jQueryElement.cssLoading('show', 'large');
  *      jQueryElement.cssLoading('hide');
  * 
  *    Caution:
  *      jQueryElement's position property of style is set 'relative'.
+ *    
+ *    refer to
+ *      http://www.alessioatzeni.com/wp-content/tutorials/html-css/CSS3-loading-animation-loop/index.html
 */
 'use strict';
 (function($){
   var methods = {
-    init : function(options){
-      if(options && options.$el){
-        var $el = options.$el;
-      } else {
-        var $el = this
-      }
+    init: function($el, size){
       $el.css('position', 'relative');
-      var d = {};
-      d.$loading = $("<div/>").addClass('loading').appendTo($el);
-      d.$mask = $("<div/>").addClass('mask').appendTo($el);
-      d.$maskMsg = $("<p/>").appendTo(d.$mask);
+      var d = {
+        $loading: $("<div/>").addClass('cssloading').appendTo($el),
+        $mask: $("<div/>").addClass('cssloading_mask').appendTo($el)
+      };
       
-      if(options && options.size){
-        if(options.size === 'small'){
-          d.$loading.addClass('loading_small')
-        }
-        if(options.size === 'large'){
-          d.$loading.addClass('loading_large')
+      if(size){
+        if(size.toLowerCase() === 'small'){
+          d.$loading.addClass('cssloading_small')
+        } else if (size.toLowerCase() === 'large'){
+          d.$loading.addClass('cssloading_large')
         }
       }
       
@@ -38,21 +35,21 @@
       
       return $el;
     },
-    show : function(){
+    show: function(size){
       var d = this.data('cssLoading');
       if(!d){
-        var $el = methods.init({$el: this});
-        d = $el.data('cssLoading');
+        methods.init(this, size);
+        d = this.data('cssLoading');
       }
       d.$loading.show();
       d.$mask.show();
       
       return this;
     },
-    hide : function(){
+    hide: function(){
       var d = this.data('cssLoading');
       if(!d){
-        var $el = methods.init({$el: this});
+        var $el = methods.init(this);
         d = $el.data('cssLoading');
       }
       d.$loading.hide();
@@ -62,13 +59,13 @@
     },
   };
   
-  $.fn.cssLoading = function(methodOrOptions) {
-    if( methods[methodOrOptions] ) {
-      return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-    }else if ( typeof methodOrOptions === 'object' || ! methodOrOptions ) {
+  $.fn.cssLoading = function(method, size) {
+    if( methods[method] ) {
+      return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else if ( typeof method === 'object' || ! method ) {
       return methods.init.apply( this, arguments ); // Default to "init"
-    }else {
-      $.error( 'Method ' +  methodOrOptions + ' does not exist. ');
+    } else {
+      $.error( 'Method ' +  method + ' does not exist. ');
     }
   };
 })(jQuery);
