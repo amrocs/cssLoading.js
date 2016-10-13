@@ -6,6 +6,8 @@
  *      jQueryElement.cssLoading('show', 'small');
  *      jQueryElement.cssLoading('show', 'large');
  *      jQueryElement.cssLoading('hide');
+ *      jQueryElement.cssLoading('showMask'); // without loading animation
+ *      jQueryElement.cssLoading('hideMask'); 
  * 
  *    Caution:
  *      jQueryElement's position property of style is set 'relative'.
@@ -48,6 +50,30 @@
       return this;
     },
     hide: function() {
+      var d = this.data('cssLoading');
+      if (!d) {
+        var $el = methods.init(this);
+        d = $el.data('cssLoading');
+      }
+      if (d) {
+        d.$loading.hide();
+        d.$mask.hide();
+      }
+      return this;
+    },
+    showMask: function() {
+      var d = this.data('cssLoading');
+      if (!d) {
+        methods.init(this);
+        d = this.data('cssLoading');
+      }
+      if (d) {
+        d.$loading.hide();
+        d.$mask.show();
+      }
+      return this;
+    },
+    hideMask: function() {
       var d = this.data('cssLoading');
       if (!d) {
         var $el = methods.init(this);
